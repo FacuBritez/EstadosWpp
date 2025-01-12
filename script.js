@@ -165,39 +165,33 @@ const juegos = [
   {
     nombre: "",
     imagen: "image.jpg",
-    texto:
-      "",
+    texto: "",
     proveedor: "Desconocido",
   },
   {
     nombre: "",
     imagen: "image.jpg",
-    texto:
-      "",
+    texto: "",
     proveedor: "Desconocido",
   },
   {
     nombre: "",
     imagen: "image.jpg",
-    texto:
-      "",
+    texto: "",
     proveedor: "Desconocido",
   },
   {
     nombre: "",
     imagen: "image.jpg",
-    texto:
-      "",
+    texto: "",
     proveedor: "Desconocido",
   },
   {
     nombre: "",
     imagen: "image.jpg",
-    texto:
-      "",
+    texto: "",
     proveedor: "Desconocido",
   },
-
 ];
 
 // Función para cargar una imagen y texto válidos
@@ -211,12 +205,11 @@ function loadRandom() {
   document.getElementById("randomText").textContent = randomItem.texto;
   document.getElementById("randomImage").src = imageUrl;
 
-  // Configura el enlace de descarga
+  // Actualizar el enlace de descarga dinámicamente
   const downloadLink = document.getElementById("downloadLink");
-  downloadLink.href = imageUrl;
-  downloadLink.download = randomItem.imagen; // Nombre del archivo para la descarga
+  downloadLink.href = selectedImage.src;
+  downloadLink.download = selectedImage.name;
 }
-
 
 // Función para copiar el texto al portapapeles
 function copyText() {
