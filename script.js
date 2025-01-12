@@ -207,14 +207,16 @@ function loadRandom() {
     randomItem = juegos[Math.floor(Math.random() * juegos.length)];
   } while (!randomItem.texto || !randomItem.imagen); // Reintenta si texto o imagen están vacíos
 
-  document.getElementById("randomText").innerText = randomItem.texto;
-  document.getElementById("randomImage").src = assetsPath + randomItem.imagen;
+  const imageUrl = `${assetsPath}${randomItem.imagen}`;
+  document.getElementById("randomText").textContent = randomItem.texto;
+  document.getElementById("randomImage").src = imageUrl;
 
-  // Actualizar el enlace de descarga
-  const downloadLink = document.getElementById("downloadBtn");
-  downloadLink.href = assetsPath + randomItem.imagen;
-  downloadLink.download = randomItem.imagen; // Asigna el nombre de archivo para la descarga
+  // Configura el enlace de descarga
+  const downloadLink = document.getElementById("downloadLink");
+  downloadLink.href = imageUrl;
+  downloadLink.download = randomItem.imagen; // Nombre del archivo para la descarga
 }
+
 
 // Función para copiar el texto al portapapeles
 function copyText() {
