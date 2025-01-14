@@ -233,26 +233,12 @@ function loadRandom() {
 // Función para copiar el texto al portapapeles
 function copyText() {
   const text = document.getElementById("randomText").innerText;
-  const messageElement = document.getElementById("copyMessage");
 
   if (text) {
     navigator.clipboard
       .writeText(text)
-      .then(() => {
-        messageElement.style.display = "block"; // Mostrar mensaje
-        setTimeout(() => {
-          messageElement.style.display = "none"; // Ocultar mensaje después de 2 segundos
-        }, 2000);
-      })
       .catch((err) => console.error("Error al copiar texto:", err));
-  } else {
-    messageElement.style.color = "red"; // Cambiar color si no hay texto
-    messageElement.innerText = "No hay texto para copiar.";
-    messageElement.style.display = "block";
-    setTimeout(() => {
-      messageElement.style.display = "none"; // Ocultar mensaje después de 2 segundos
-    }, 2000);
-  }
+  } 
 }
 
 // Cargar un elemento válido al iniciar
