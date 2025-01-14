@@ -8,16 +8,14 @@
   </head>
   <body>
     <div>
-      <button onclick="copyText()" class="copyText">Copiar texto</button>
-      <p id="copyMessage" style="color: green; display: none">
-        Texto copiado al portapapeles
-      </p>
-      <button onclick="loadRandom()">🔄️</button>
-      <p id="randomText"></p>
-      
+      <button>Decargar imagen <br>y<br>copiar texto</button>
+      <button onclick="copyText()" class="copyText">Copiar texto</button>      
       <a id="downloadLink" href="" download>Descargar Imagen</a>
 
+      <button onclick="loadRandom()">🔄️</button>
+
       <img id="randomImage" src="" alt="Imagen aleatoria" />    
+      <p id="randomText"></p>
     </div>
     <script src="script.js"></script>
   </body>
