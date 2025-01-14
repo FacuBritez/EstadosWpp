@@ -225,9 +225,10 @@ function loadRandom() {
 
   // Actualizar el enlace de descarga dinámicamente
   const downloadLink = document.getElementById("downloadLink");
-  downloadLink.href = randomItem.src;
-  downloadLink.download = randomItem.name;
+  downloadLink.href = imageUrl; // Usar la URL de la imagen
+  downloadLink.download = randomItem.nombre || "imagen_aleatoria.jpg"; // Nombre del archivo o por defecto
 }
+
 
 // Función para copiar el texto al portapapeles
 function copyText() {
