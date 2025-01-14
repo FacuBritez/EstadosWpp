@@ -192,6 +192,24 @@ const juegos = [
     texto: "",
     proveedor: "Desconocido",
   },
+  {
+    nombre: "",
+    imagen: "image.jpg",
+    texto: "",
+    proveedor: "Desconocido",
+  },
+  {
+    nombre: "",
+    imagen: "image.jpg",
+    texto: "",
+    proveedor: "Desconocido",
+  },
+  {
+    nombre: "",
+    imagen: "image.jpg",
+    texto: "",
+    proveedor: "Desconocido",
+  },
 ];
 
 // Función para cargar una imagen y texto válidos
@@ -207,8 +225,8 @@ function loadRandom() {
 
   // Actualizar el enlace de descarga dinámicamente
   const downloadLink = document.getElementById("downloadLink");
-  downloadLink.href = selectedImage.src;
-  downloadLink.download = selectedImage.name;
+  downloadLink.href = randomItem.src;
+  downloadLink.download = randomItem.name;
 }
 
 // Función para copiar el texto al portapapeles
