@@ -245,6 +245,7 @@ function copyText() {
 }
 
 function downloadAndCopy() {
+  console.log("downloadAndCopy() llamado")
   // Copia el texto.
   copyText();
 
