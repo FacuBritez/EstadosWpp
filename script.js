@@ -244,5 +244,14 @@ function copyText() {
   }
 }
 
+function downloadAndCopy() {
+  // Copia el texto.
+  copyText();
+
+  // Simula un clic en el enlace para descargar la imagen.
+  const downloadLink = document.getElementById('downloadLink');
+  downloadLink.click();
+}
+
 // Cargar un elemento válido al iniciar
 loadRandom();
