@@ -165,25 +165,29 @@ const juegos = [
   {
     nombre: "FAT PANDA",
     imagen: "image24.jpg",
-    texto: "✨¡Explora '*FAT PANDA*' 🐼 Te deslumbrará con recompensas místicas. ✨ ¡Juega ahora y descubre la fortuna junto al adorable panda! 🐾🐼",
+    texto:
+      "✨¡Explora '*FAT PANDA*' 🐼 Te deslumbrará con recompensas místicas. ✨ ¡Juega ahora y descubre la fortuna junto al adorable panda! 🐾🐼",
     proveedor: "Desconocido",
   },
   {
     nombre: "Fire Portals",
     imagen: "image25.jpg",
-    texto: "Descubre el misterio entre las montañas de 🔥*Fire Portals*🔥 . Aventúrate en un mundo de emocionantes giros y misteriosos premios. ¿Estás listo para desvelar los secretos que aguardan? 🔍💎",
+    texto:
+      "Descubre el misterio entre las montañas de 🔥*Fire Portals*🔥 . Aventúrate en un mundo de emocionantes giros y misteriosos premios. ¿Estás listo para desvelar los secretos que aguardan? 🔍💎",
     proveedor: "Desconocido",
   },
   {
     nombre: "Triple Dragons",
     imagen: "image26.jpg",
-    texto: "🐲Embárcate en la emocionante búsqueda de los tres dragones afortunados en Triple Dragons! 🐉🔍 Descubre a estos poderosos seres y desbloquea tu próxima gran victoria🐉💸",
+    texto:
+      "🐲Embárcate en la emocionante búsqueda de los tres dragones afortunados en Triple Dragons! 🐉🔍 Descubre a estos poderosos seres y desbloquea tu próxima gran victoria🐉💸",
     proveedor: "Desconocido",
   },
   {
     nombre: "Spaceman",
     imagen: "image27.jpg",
-    texto: "💫 ¡¡Eleva tu experiencia con '*Spaceman*'!! 🚀 ¡Esquiva obstáculos y alcanza nuevas alturas en este juego de aventura! 🌠 ☄️",
+    texto:
+      "💫 ¡¡Eleva tu experiencia con '*Spaceman*'!! 🚀 ¡Esquiva obstáculos y alcanza nuevas alturas en este juego de aventura! 🌠 ☄️",
     proveedor: "Desconocido",
   },
   {
@@ -229,7 +233,6 @@ function loadRandom() {
   downloadLink.download = randomItem.nombre || "imagen_aleatoria.jpg"; // Nombre del archivo o por defecto
 }
 
-
 // Función para copiar el texto al portapapeles
 function copyText() {
   const text = document.getElementById("randomText").innerText;
@@ -238,7 +241,7 @@ function copyText() {
     navigator.clipboard
       .writeText(text)
       .catch((err) => console.error("Error al copiar texto:", err));
-  } 
+  }
 }
 
 // Cargar un elemento válido al iniciar
