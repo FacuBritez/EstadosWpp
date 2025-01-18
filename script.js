@@ -191,15 +191,17 @@ const juegos = [
     proveedor: "Desconocido",
   },
   {
-    nombre: "",
-    imagen: "image.jpg",
-    texto: "",
-    proveedor: "Desconocido",
+    nombre: "Fury of Odin Megaways",
+    imagen: "image28.jpg",
+    texto:
+      "🔥🤯 Vive la Aventura Nórdica: Experimenta la emoción de los dioses en Fury of Odin Megaways. ¡Gira y descubre las infinitas posibilidades de premios! 🤑💪🏻",
+    proveedor: "Pragmatic",
   },
   {
-    nombre: "",
-    imagen: "image.jpg",
-    texto: "",
+    nombre: "Blade & Fangs",
+    imagen: "image29.jpg",
+    texto:
+      "🌑🦇Sumérgete en la oscuridad de la mansión gótica en '*Blade & Fangs*'! 🐍Enfrenta tus miedos mientras exploras los pasillos infestados de criaturas de la noche. ¿Estás listo para descubrir los secretos ocultos de la mansión? 🦇🕯️",
     proveedor: "Desconocido",
   },
   {
@@ -245,12 +247,12 @@ function copyText() {
 }
 
 function downloadAndCopy() {
-  console.log("downloadAndCopy() llamado")
+  console.log("downloadAndCopy() llamado");
   // Copia el texto.
   copyText();
 
   // Simula un clic en el enlace para descargar la imagen.
-  const downloadLink = document.getElementById('downloadLink');
+  const downloadLink = document.getElementById("downloadLink");
   downloadLink.click();
 }
 
