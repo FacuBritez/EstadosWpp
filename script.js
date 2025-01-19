@@ -139,7 +139,7 @@ const juegos = [
     imagen: "image20.jpg",
     texto:
       "🎣💥 ¡Prepárate para una pesca llena de sorpresas en Big Bass Bonanza! 🐟💰 Lanza tu anzuelo y captura grandes premios mientras disfrutas de una emocionante aventura en el mar. 🌊🎉",
-    proveedor: "Desconocido",
+    proveedor: "Pragmatic",
   },
   {
     nombre: "Mustang Gold",
