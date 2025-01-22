@@ -87,16 +87,20 @@ p {
   transform: scale(0.95);
 }
 
+
 #loadRandom {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   font-size: 1.5em;
   background: none;
   color: #4a90e2;
   padding: 0;
-  z-index: 10; 
   border: none;
+  cursor: pointer;
 }
 
 #loadRandom:hover {
