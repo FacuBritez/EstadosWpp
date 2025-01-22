@@ -3,7 +3,9 @@ const assetsPath = "./assets/";
 // Función para cargar datos desde el backend
 async function fetchJuegos() {
   try {
-    const response = await fetch('http://localhost:3000/api/juegos');
+    const response = await fetch(
+      "https://estados-backend.onrender.com/api/juegos"
+    );
     return await response.json();
   } catch (error) {
     console.error("Error al cargar juegos:", error);
