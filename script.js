@@ -9,7 +9,10 @@ async function fetchJuegos() {
     return await response.json();
   } catch (error) {
     console.error("Error al cargar juegos:", error);
-    return []; // Retorna array vacío si hay error
+    return [{ 
+      texto: "⚠️ Reactivando servidor... (espera un minuto y recarga)", 
+      imagen: "default.gif"
+    }];
   }
 }
 
