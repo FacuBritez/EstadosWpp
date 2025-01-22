@@ -1,61 +1,61 @@
 const assetsPath = "./assets/";
 
-// Función para cargar datos desde el backend
 async function fetchJuegos() {
   try {
-    const response = await fetch(
-      "https://estados-backend.onrender.com/api/juegos"
-    );
+    const response = await fetch("https://estados-backend.onrender.com/api/juegos");
     return await response.json();
   } catch (error) {
-    console.error("Error al cargar juegos:", error);
-    return [{ 
-      texto: "⚠️ Reactivando servidor... (espera un minuto y recarga)", 
+    console.error("Error:", error);
+    return [{
+      texto: "⚠️ Reactivando servidor... (espera 1 minuto y actualiza)",
       imagen: "default.gif"
     }];
   }
 }
 
-// Función para cargar una imagen y texto válidos
 async function loadRandom() {
-  const juegos = await fetchJuegos(); // Ahora los datos vienen del backend
-  if (juegos.length === 0) return; // Si no hay datos, no hace nada
+  // Fade out
+  document.getElementById('randomImage').style.opacity = '0';
+  document.getElementById('randomText').style.opacity = '0';
+
+  const juegos = await fetchJuegos();
+  if (juegos.length === 0) return;
 
   let randomItem;
+  let intentos = 0;
   do {
     randomItem = juegos[Math.floor(Math.random() * juegos.length)];
-  } while (!randomItem.texto || !randomItem.imagen); // Reintenta si texto o imagen están vacíos
+    intentos++;
+  } while ((!randomItem.texto || !randomItem.imagen) && intentos < 10);
 
-  const imageUrl = `${assetsPath}${randomItem.imagen}`;
-  document.getElementById("randomText").textContent = randomItem.texto;
-  document.getElementById("randomImage").src = imageUrl;
+  // Fade in después de 300ms
+  setTimeout(() => {
+    const imageUrl = `${assetsPath}${randomItem.imagen}`;
+    
+    document.getElementById("randomText").textContent = randomItem.texto;
+    document.getElementById("randomImage").src = imageUrl;
+    
+    const downloadLink = document.getElementById("downloadLink");
+    downloadLink.href = imageUrl;
+    downloadLink.download = randomItem.nombre || "imagen_aleatoria.jpg";
 
-  // Actualizar el enlace de descarga dinámicamente
-  const downloadLink = document.getElementById("downloadLink");
-  downloadLink.href = imageUrl; // Usar la URL de la imagen
-  downloadLink.download = randomItem.nombre || "imagen_aleatoria.jpg"; // Nombre del archivo o por defecto
+    document.getElementById('randomImage').style.opacity = '1';
+    document.getElementById('randomText').style.opacity = '1';
+  }, 1);
 }
 
-// Función para copiar el texto al portapapeles
 function copyText() {
   const text = document.getElementById("randomText").innerText;
-
   if (text) {
-    navigator.clipboard
-      .writeText(text)
-      .catch((err) => console.error("Error al copiar texto:", err));
+    navigator.clipboard.writeText(text)
+      .catch(err => console.error("Error al copiar:", err));
   }
 }
 
 function downloadAndCopy() {
-  console.log("downloadAndCopy() llamado");
-  // Copia el texto.
   copyText();
-
-  // Simula un clic en el enlace para descargar la imagen.
-  const downloadLink = document.getElementById("downloadLink");
-  downloadLink.click();
+  document.getElementById("downloadLink").click();
 }
 
-// Cargar un elemento válido al iniciar
+// Iniciar
 loadRandom();

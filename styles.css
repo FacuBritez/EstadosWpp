@@ -1,12 +1,9 @@
-/* Reset general */
-body,
-h1,
-p,
-button,
-a {
+/* Reset */
+body, h1, p, button, a {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 body {
@@ -15,52 +12,58 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  min-height: 100vh; /* Asegura que el body ocupe toda la altura del viewport */
+  min-height: 100vh;
   color: #333;
   padding: 10px;
-  overflow: hidden; /* Evita que aparezcan barras de desplazamiento */
 }
 
 .container {
-  background: #ffffff;
+  background: #fff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   max-width: 550px;
-  width: 100%;
-  text-align: center;
-  position: relative;
+  width: 95%;
+  margin: 10px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .slot {
-  height: 200px;
-  text-align: center; 
-  line-height: 200px; 
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-img {
-  display: inline-block;
-  vertical-align: middle; 
-  max-width: 150px;
-  height: auto;
-  border-radius: 8px;
+#randomImage {
+  max-width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
-
-p {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0;
-  line-height: normal;
-}
-
 
 #randomText {
-  font-size: 1em;
+  max-width: 90%;
+  padding: 0 10px;
+  text-align: center;
+  word-break: break-word;
   line-height: 1.4;
+  max-height: 80px;
+  overflow-y: auto;
   color: #555;
-  margin: 10px auto;
-  max-width: 350px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .button {
@@ -68,31 +71,22 @@ p {
   color: #fff;
   border: none;
   padding: 10px 15px;
-  margin: 5px;
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
   border-radius: 8px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .button:hover {
   background: #357abd;
+  transform: translateY(-1px);
 }
-
-.button:active {
-  transform: scale(0.95);
-}
-
 
 #loadRandom {
-  vertical-align: middle;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 40px;
   height: 40px;
   font-size: 1.5em;
@@ -100,25 +94,20 @@ p {
   color: #4a90e2;
   padding: 0;
   border: none;
-  cursor: pointer;
 }
 
-#loadRandom:hover {
-  color: #357abd;
-}
+/* Responsive */
+@media (max-width: 480px) {
+  .container {
+    padding: 15px;
+  }
 
-a {
-  display: inline-block;
-  text-decoration: none;
-  font-weight: bold;
-  background: #4caf50;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-top: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+  .button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
 
-a:hover {
-  background: #3e8e41;
+  #randomText {
+    font-size: 0.9em;
+  }
 }
