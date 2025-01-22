@@ -206,55 +206,55 @@ const juegos = [
   },
   {
     nombre: "Happy Hooves",
-    imagen: "image30.jpg",
+    imagen: "image30.png",
     texto:
       "🌟🤑 ¡Descubre la magia de la granja en '*Happy Hooves*'! Cuida a tus adorables animales, cultiva tus tierras y crea la granja de tus sueños. ¡Comienza la aventura! 🐴🌾",
     proveedor: "Pragmatic",
   },
   {
     nombre: "Release the Kraken",
-    imagen: "image31.jpg",
+    imagen: "image31.png",
     texto:
       "🐙🪼🌊🐚 Desata al kraken en '*Release the Kraken*' . Gira los carretes y enfréntate a esta legendaria bestia marina para ganar fabulosos tesoros en bonificaciones épicas. 🐙🪼🌊🐚",
     proveedor: "Desconocido",
   },
   {
     nombre: "Heroic Spins",
-    imagen: "image32.jpg",
+    imagen: "image32.png",
     texto:
       "¡👸🐉 Descubre '*Heroic Spins*'! 🌟 ¡Gira y vive la emoción de la heroicidad! 🎉💎Embárcate en una épica aventura con princesas valientes, dragones feroces y tesoros ocultos.🌟🦉",
     proveedor: "Desconocido",
   },
   {
     nombre: "Double Stacks",
-    imagen: "image33.jpg",
+    imagen: "image33.png",
     texto:
       "✌🏼💰Si quieres ganancias dobles y al mismo tiempo doble diversión, entonces *Double Stacks* es el juego ideal para ti😎✌🏼",
     proveedor: "Desconocido",
   },
   {
     nombre: "Tales of Dr. Dolittle",
-    imagen: "image34.jpg",
+    imagen: "image34.png",
     texto:
       'Conoce un nuevo mundo en "Tales of Dr. Dolittle". Conoce al Dr. Dolittle, habla con sus animales y recibe una gran recompensa por ayudarlos a juntarse!! 🐶👨🏼‍⚕️🙀🦜💰💰',
     proveedor: "Desconocido",
   },
   {
     nombre: "Rio Pleasures",
-    imagen: "image35.jpg",
+    imagen: "image35.png",
     texto:
       "🤩🎰 ¡Es hora del desafío! Completa la misión de hoy y gana recompensas exclusivas en *Rio Pleasures*. ¡No te lo pierdas! 💸🍀",
     proveedor: "Ruby Play",
   },
   {
     nombre: "Jokers Jewels Wild",
-    imagen: "image36.jpg",
+    imagen: "image36.png",
     texto: "🎰🤡 ¡Descubre la magia de Jokers Jewels Wild! Sumérgete en un mundo de diversión y grandes premios con este emocionante juego de Pragmatic Play. ¡No te lo pierdas! 🔥🤑",
     proveedor: "Pragmatic",
   },
   {
     nombre: "The Legendary Red Dragon",
-    imagen: "image37.jpg",
+    imagen: "image37.png",
     texto: "🐉🐲 Hoy te presentamos a *The Legendary Red Dragon*, el slot épico que ofrece victorias legendarias. 🎰🔥Gira los rodillos y conquista tu fortuna. ¡A jugar y ganar!🎰🔥",
     proveedor: "Desconocido",
   },
