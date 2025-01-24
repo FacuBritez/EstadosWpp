@@ -12,19 +12,17 @@
   </head>
   <body>
     <div class="container">
-
-      <div>
+      <div class="button-container">
         <button onclick="loadRandom()" id="loadRandom">
           <i class="fas fa-sync-alt"></i>
         </button>
 
-
         <button onclick="downloadAndCopy()" class="button">
           💾imagen📋texto
         </button>
-        
+
         <a id="downloadLink" class="button" download>💾Imagen</a>
-        
+
         <button onclick="copyText()" class="button">📋texto</button>
       </div>
 
@@ -32,7 +30,6 @@
         <img id="randomImage" src="" alt="Imagen aleatoria" />
         <p id="randomText"></p>
       </div>
-
     </div>
     <script src="script.js"></script>
   </body>

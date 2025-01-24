@@ -27,6 +27,19 @@ body {
   margin: 10px;
 }
 
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem; /* Reducimos el espacio entre elementos */
+  margin: -0.25rem; /* Compensa el espacio agregado por el gap */
+}
+
+i {
+  cursor: pointer;
+}
+
 .controls {
   display: flex;
   gap: 10px;
