@@ -6,10 +6,6 @@ async function fetchJuegos() {
     return await response.json();
   } catch (error) {
     console.error("Error:", error);
-    return [{
-      texto: "⚠️ Reactivando servidor... (espera 1 minuto y actualiza)",
-      imagen: "default.gif"
-    }];
   }
 }
 
@@ -41,7 +37,7 @@ async function loadRandom() {
 
     document.getElementById('randomImage').style.opacity = '1';
     document.getElementById('randomText').style.opacity = '1';
-  }, 1);
+  }, 400);
 }
 
 function copyText() {
