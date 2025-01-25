@@ -24,7 +24,7 @@ async function loadRandom() {
     intentos++;
   } while ((!randomItem.texto || !randomItem.imagen) && intentos < 10);
 
-  // Fade in después de 300ms
+  // Fade in
   setTimeout(() => {
     const imageUrl = `${assetsPath}${randomItem.imagen}`;
     
@@ -37,7 +37,7 @@ async function loadRandom() {
 
     document.getElementById('randomImage').style.opacity = '1';
     document.getElementById('randomText').style.opacity = '1';
-  }, 400);
+  }, 650);
 }
 
 function copyText() {
