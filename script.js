@@ -1,26 +1,36 @@
 const assetsPath = "./assets/";
+let juegosCache = null; // Variable para almacenar los juegos
 
 async function fetchJuegos() {
   try {
-    const response = await fetch("https://very-olva-facubritez-dda6723d.koyeb.app/api/juegos"); //La anterior: https://estados-backend.onrender.com/api/juegos
+    const response = await fetch("https://very-olva-facubritez-dda6723d.koyeb.app/api/juegos");
     return await response.json();
   } catch (error) {
     console.error("Error:", error);
+    return []; // Retorna array vacío en caso de error
   }
 }
 
-async function loadRandom() {
+// Función para cargar y cachear los juegos al iniciar
+async function initialize() {
+  juegosCache = await fetchJuegos();
+  loadRandom(); // Carga el primer juego después de obtener los datos
+}
+
+function loadRandom() {
   // Fade out
   document.getElementById('randomImage').style.opacity = '0';
   document.getElementById('randomText').style.opacity = '0';
 
-  const juegos = await fetchJuegos();
-  if (juegos.length === 0) return;
+  if (!juegosCache || juegosCache.length === 0) {
+    console.error("No hay juegos disponibles.");
+    return;
+  }
 
   let randomItem;
   let intentos = 0;
   do {
-    randomItem = juegos[Math.floor(Math.random() * juegos.length)];
+    randomItem = juegosCache[Math.floor(Math.random() * juegosCache.length)];
     intentos++;
   } while ((!randomItem.texto || !randomItem.imagen) && intentos < 10);
 
@@ -37,7 +47,7 @@ async function loadRandom() {
 
     document.getElementById('randomImage').style.opacity = '1';
     document.getElementById('randomText').style.opacity = '1';
-  }, 650);
+  }, 100);
 }
 
 function copyText() {
@@ -54,4 +64,4 @@ function downloadAndCopy() {
 }
 
 // Iniciar
-loadRandom();
+initialize();
