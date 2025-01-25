@@ -47,7 +47,7 @@ function loadRandom() {
 
     document.getElementById('randomImage').style.opacity = '1';
     document.getElementById('randomText').style.opacity = '1';
-  }, 100);
+  }, 300);
 }
 
 function copyText() {
