@@ -3,11 +3,18 @@ let juegosCache = null; // Variable para almacenar los juegos
 
 async function fetchJuegos() {
   try {
-    const response = await fetch("https://very-olva-facubritez-dda6723d.koyeb.app/api/juegos");
+    const response = await fetch(
+      "https://very-olva-facubritez-dda6723d.koyeb.app/api/juegos"
+    );
     return await response.json();
   } catch (error) {
     console.error("Error:", error);
-    return []; // Retorna array vacío en caso de error
+    return [
+      {
+        imagen: "default.gif",
+        texto: "y los jueguito??<br><br>⚠️Se cayó el servidor⚠️",
+      },
+    ];
   }
 }
 
@@ -19,8 +26,8 @@ async function initialize() {
 
 function loadRandom() {
   // Fade out
-  document.getElementById('randomImage').style.opacity = '0';
-  document.getElementById('randomText').style.opacity = '0';
+  document.getElementById("randomImage").style.opacity = "0";
+  document.getElementById("randomText").style.opacity = "0";
 
   if (!juegosCache || juegosCache.length === 0) {
     console.error("No hay juegos disponibles.");
@@ -37,24 +44,25 @@ function loadRandom() {
   // Fade in
   setTimeout(() => {
     const imageUrl = `${assetsPath}${randomItem.imagen}`;
-    
-    document.getElementById("randomText").textContent = randomItem.texto;
+
+    document.getElementById("randomText").innerHTML = randomItem.texto;
     document.getElementById("randomImage").src = imageUrl;
-    
+
     const downloadLink = document.getElementById("downloadLink");
     downloadLink.href = imageUrl;
     downloadLink.download = randomItem.nombre || "imagen_aleatoria.jpg";
 
-    document.getElementById('randomImage').style.opacity = '1';
-    document.getElementById('randomText').style.opacity = '1';
+    document.getElementById("randomImage").style.opacity = "1";
+    document.getElementById("randomText").style.opacity = "1";
   }, 300);
 }
 
 function copyText() {
   const text = document.getElementById("randomText").innerText;
   if (text) {
-    navigator.clipboard.writeText(text)
-      .catch(err => console.error("Error al copiar:", err));
+    navigator.clipboard
+      .writeText(text)
+      .catch((err) => console.error("Error al copiar:", err));
   }
 }
 
