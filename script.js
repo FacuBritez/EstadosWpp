@@ -2,7 +2,7 @@ const assetsPath = "./assets/";
 
 async function fetchJuegos() {
   try {
-    const response = await fetch("https://estados-backend.onrender.com/api/juegos");
+    const response = await fetch("https://very-olva-facubritez-dda6723d.koyeb.app/api/juegos"); //La anterior: https://estados-backend.onrender.com/api/juegos
     return await response.json();
   } catch (error) {
     console.error("Error:", error);
