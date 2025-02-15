@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
-// Importa todas las imágenes de la carpeta (modifica la extensión si es necesario)
-const images = import.meta.globEager("../assets/slots/*.{jpg,png,gif}");
+// Importa todas las imágenes de la carpeta
+const images = import.meta.glob("../assets/slots/*.{jpg,png,gif}", { eager: true });
 
 let juegosCache = null; // Variable para almacenar los juegos
 
@@ -48,7 +48,7 @@ function loadRandom() {
   let randomItem;
   let intentos = 0;
 
-  // Evita bucles infinitos en el caso de que no encuentre un slot válido
+  // Evita bucles infinitos en caso de datos inválidos
   do {
     randomItem = juegosCache[Math.floor(Math.random() * juegosCache.length)];
     intentos++;
