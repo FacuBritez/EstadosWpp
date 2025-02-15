@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-// Importa todas las imágenes de la carpeta
-const images = import.meta.glob("../assets/slots/*.{jpg,png,gif}", { eager: true });
-
+const assetsPath = "/src/assets/slots/";
 let juegosCache = null; // Variable para almacenar los juegos
 
 async function fetchJuegos() {
@@ -48,7 +46,7 @@ function loadRandom() {
   let randomItem;
   let intentos = 0;
 
-  // Evita bucles infinitos en caso de datos inválidos
+  // Evita bucles infinitos en el caso de que no encuentre un slot válido
   do {
     randomItem = juegosCache[Math.floor(Math.random() * juegosCache.length)];
     intentos++;
@@ -59,10 +57,7 @@ function loadRandom() {
 
   // Fade in
   setTimeout(() => {
-    // Construye la clave para buscar la imagen importada
-    const imageKey = `../assets/slots/${randomItem.imagen}`;
-    const imageModule = images[imageKey];
-    const imageUrl = imageModule ? imageModule.default : randomItem.imagen;
+    const imageUrl = `${assetsPath}${randomItem.imagen}`;
 
     randomText.innerHTML = randomItem.texto;
     randomImage.src = imageUrl;
@@ -125,7 +120,7 @@ function Slots() {
         </div>
 
         <div className="slot">
-          <img id="randomImage" alt="Imagen aleatoria" />
+          <img id="randomImage" />
           <p id="randomText"></p>
         </div>
       </div>
