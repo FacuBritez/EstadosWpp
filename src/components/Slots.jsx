@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const assetsPath = "/EstadosWpp/src/assets/slots/"; 
+const assetsPath = "/EstadosWpp/src/assets/slots/"; // Actualiza la ruta base
 let juegosCache = null; // Variable para almacenar los juegos
 
 async function fetchJuegos() {
