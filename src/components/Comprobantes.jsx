@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
-const assetsPath = "/EstadosWpp/assets/slots/"; // Ruta base para las imágenes
-let juegosCache = null; // Variable para almacenar los juegos
+const assetsPath = "/assets/slots/"; // Ruta corregida
+let juegosCache = null;
 
 async function fetchJuegos() {
   try {
@@ -20,15 +20,14 @@ async function fetchJuegos() {
   }
 }
 
-// Función para cargar y cachear los juegos al iniciar
 async function initialize() {
   if (!juegosCache) {
     juegosCache = await fetchJuegos();
-    loadRandom(); // Carga el primer juego después de obtener los datos
+    loadRandom();
   }
 }
 
-let fadeOut = () => {
+const fadeOut = () => {
   const randomImage = document.getElementById("randomImage");
   const randomText = document.getElementById("randomText");
   if (randomImage && randomText) {
@@ -46,21 +45,15 @@ function loadRandom() {
   let randomItem;
   let intentos = 0;
 
-  // Evita bucles infinitos en caso de datos inválidos
   do {
     randomItem = juegosCache[Math.floor(Math.random() * juegosCache.length)];
     intentos++;
   } while ((!randomItem.texto || !randomItem.imagen) && intentos < 10);
 
-  // Fade out
   fadeOut();
 
-  // Fade in
   setTimeout(() => {
-    // Si el nombre de la imagen contiene "src/", lo eliminamos
-    const imageName = randomItem.imagen.replace("src/", "");
-    const imageUrl = `${assetsPath}${imageName}`;
-
+    const imageUrl = `${assetsPath}${randomItem.imagen}`; // Ruta directa
     randomText.innerHTML = randomItem.texto;
     randomImage.src = imageUrl;
 
@@ -72,8 +65,6 @@ function loadRandom() {
     randomText.style.opacity = "1";
   }, 300);
 }
-
-// Funciones para botones
 
 function copyText() {
   const text = document.getElementById("randomText").innerText;
