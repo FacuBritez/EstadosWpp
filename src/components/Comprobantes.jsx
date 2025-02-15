@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const assetsPath =  "assets/slots/";
+const assetsPath = "/EstadosWpp/assets/slots/"; // Actualiza la ruta base
 let juegosCache = null; // Variable para almacenar los juegos
 
 async function fetchJuegos() {
@@ -20,11 +20,11 @@ async function fetchJuegos() {
   }
 }
 
-// Carga y cachea los juegos al iniciar
+// Función para cargar y cachear los juegos al iniciar
 async function initialize() {
   if (!juegosCache) {
     juegosCache = await fetchJuegos();
-    loadRandom();
+    loadRandom(); // Carga el primer juego después de obtener los datos
   }
 }
 
@@ -40,19 +40,25 @@ let fadeOut = () => {
 function loadRandom() {
   const randomImage = document.getElementById("randomImage");
   const randomText = document.getElementById("randomText");
+
   if (!randomImage || !randomText || !juegosCache) return;
 
   let randomItem;
   let intentos = 0;
+
+  // Evita bucles infinitos en el caso de que no encuentre un slot válido
   do {
     randomItem = juegosCache[Math.floor(Math.random() * juegosCache.length)];
     intentos++;
   } while ((!randomItem.texto || !randomItem.imagen) && intentos < 10);
 
+  // Fade out
   fadeOut();
 
+  // Fade in
   setTimeout(() => {
-    const imageUrl = assetsPath + randomItem.imagen;
+    const imageUrl = `${assetsPath}${randomItem.imagen}`;
+
     randomText.innerHTML = randomItem.texto;
     randomImage.src = imageUrl;
 
@@ -64,6 +70,8 @@ function loadRandom() {
     randomText.style.opacity = "1";
   }, 300);
 }
+
+// Funciones para botones
 
 function copyText() {
   const text = document.getElementById("randomText").innerText;
@@ -81,6 +89,7 @@ function downloadAndCopy() {
 
 function Slots() {
   const initializedRef = useRef(false);
+
   useEffect(() => {
     if (!initializedRef.current) {
       initialize();
@@ -96,16 +105,20 @@ function Slots() {
           <button onClick={loadRandom} id="loadRandom">
             <i className="fas fa-sync-alt"></i>
           </button>
+
           <button onClick={downloadAndCopy} className="button">
             💾imagen📋texto
           </button>
+
           <a id="downloadLink" className="button" download>
             💾Imagen
           </a>
+
           <button onClick={copyText} className="button">
             📋texto
           </button>
         </div>
+
         <div className="slot">
           <img id="randomImage" alt="Imagen aleatoria" />
           <p id="randomText"></p>
