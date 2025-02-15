@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-// Usa la base definida en vite.config.js para construir la ruta
-const assetsPath = import.meta.env.BASE_URL + "assets/slots/";
+const assetsPath =  "assets/slots/";
 let juegosCache = null; // Variable para almacenar los juegos
 
 async function fetchJuegos() {
