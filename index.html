@@ -2,35 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Imagen y Texto Aleatorios</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Estados</title>
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
   </head>
   <body>
-    <div class="container">
-      <div class="button-container">
-        <button onclick="loadRandom()" id="loadRandom">
-          <i class="fas fa-sync-alt"></i>
-        </button>
-
-        <button onclick="downloadAndCopy()" class="button">
-          💾imagen📋texto
-        </button>
-
-        <a id="downloadLink" class="button" download>💾Imagen</a>
-
-        <button onclick="copyText()" class="button">📋texto</button>
-      </div>
-
-      <div class="slot">
-        <img id="randomImage" src=""/>
-        <p id="randomText"></p>
-      </div>
-    </div>
-    <script src="script.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
