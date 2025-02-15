@@ -65,10 +65,13 @@ function Comprobantes() {
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64File = reader.result.split(",")[1];
-        const response = await axios.post("http://localhost:3000/api/procesar-imagen", {
-          file: base64File,
-          overlayType
-        });
+        const response = await axios.post(
+          "https://very-olva-facubritez-dda6723d.koyeb.app/api/procesar-imagen",
+          {
+            file: base64File,
+            overlayType,
+          }
+        );
         setProcessedImage(response.data.processedImage);
       };
       reader.readAsDataURL(file);
