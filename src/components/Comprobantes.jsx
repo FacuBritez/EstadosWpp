@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const assetsPath = "/EstadosWpp/assets/slots/"; // Actualiza la ruta base
+const assetsPath = "/EstadosWpp/assets/slots/"; // Ruta base para las imágenes
 let juegosCache = null; // Variable para almacenar los juegos
 
 async function fetchJuegos() {
@@ -46,7 +46,7 @@ function loadRandom() {
   let randomItem;
   let intentos = 0;
 
-  // Evita bucles infinitos en el caso de que no encuentre un slot válido
+  // Evita bucles infinitos en caso de datos inválidos
   do {
     randomItem = juegosCache[Math.floor(Math.random() * juegosCache.length)];
     intentos++;
@@ -57,7 +57,9 @@ function loadRandom() {
 
   // Fade in
   setTimeout(() => {
-    const imageUrl = `${assetsPath}${randomItem.imagen}`;
+    // Si el nombre de la imagen contiene "src/", lo eliminamos
+    const imageName = randomItem.imagen.replace("src/", "");
+    const imageUrl = `${assetsPath}${imageName}`;
 
     randomText.innerHTML = randomItem.texto;
     randomImage.src = imageUrl;
