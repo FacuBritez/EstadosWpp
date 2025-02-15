@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const assetsPath = "src/assets/slots/";
+const assetsPath = "/src/assets/slots/";
 let juegosCache = null; // Variable para almacenar los juegos
 
 async function fetchJuegos() {
