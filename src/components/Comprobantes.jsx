@@ -1,124 +1,121 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import "./Comprobantes.css";
 
-const assetsPath = "/assets/slots/"; // Ruta corregida
-let juegosCache = null;
+function Comprobantes() {
+  const [overlayType, setOverlayType] = useState("NaranjaX 1");
+  const [processedImage, setProcessedImage] = useState(null);
+  const [file, setFile] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
 
-async function fetchJuegos() {
-  try {
-    const response = await fetch(
-      "https://very-olva-facubritez-dda6723d.koyeb.app/api/juegos"
-    );
-    return await response.json();
-  } catch (error) {
-    console.error("Error:", error);
-    return [
-      {
-        imagen: "default.gif",
-        texto: "y los jueguito??<br><br>⚠️Se cayó el servidor⚠️",
-      },
-    ];
-  }
-}
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
 
-async function initialize() {
-  if (!juegosCache) {
-    juegosCache = await fetchJuegos();
-    loadRandom();
-  }
-}
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
 
-const fadeOut = () => {
-  const randomImage = document.getElementById("randomImage");
-  const randomText = document.getElementById("randomText");
-  if (randomImage && randomText) {
-    randomImage.style.opacity = "0";
-    randomText.style.opacity = "0";
-  }
-};
-
-function loadRandom() {
-  const randomImage = document.getElementById("randomImage");
-  const randomText = document.getElementById("randomText");
-
-  if (!randomImage || !randomText || !juegosCache) return;
-
-  let randomItem;
-  let intentos = 0;
-
-  do {
-    randomItem = juegosCache[Math.floor(Math.random() * juegosCache.length)];
-    intentos++;
-  } while ((!randomItem.texto || !randomItem.imagen) && intentos < 10);
-
-  fadeOut();
-
-  setTimeout(() => {
-    const imageUrl = `${assetsPath}${randomItem.imagen}`; // Ruta directa
-    randomText.innerHTML = randomItem.texto;
-    randomImage.src = imageUrl;
-
-    const downloadLink = document.getElementById("downloadLink");
-    downloadLink.href = imageUrl;
-    downloadLink.download = randomItem.nombre || "imagen_aleatoria.jpg";
-
-    randomImage.style.opacity = "1";
-    randomText.style.opacity = "1";
-  }, 300);
-}
-
-function copyText() {
-  const text = document.getElementById("randomText").innerText;
-  if (text) {
-    navigator.clipboard
-      .writeText(text)
-      .catch((err) => console.error("Error al copiar:", err));
-  }
-}
-
-function downloadAndCopy() {
-  copyText();
-  document.getElementById("downloadLink").click();
-}
-
-function Slots() {
-  const initializedRef = useRef(false);
-
-  useEffect(() => {
-    if (!initializedRef.current) {
-      initialize();
-      initializedRef.current = true;
+  const handleDrop = async (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const newFile = e.dataTransfer.files[0];
+    if (newFile && (newFile.type.startsWith("image/") || newFile.type === "application/pdf")) {
+      setFile(newFile);
+      await updateImage(newFile, overlayType);
     }
-  }, []);
+  };
+
+  const handleFileChange = async (e) => {
+    const newFile = e.target.files[0];
+    if (newFile) {
+      setFile(newFile);
+      await updateImage(newFile, overlayType);
+    }
+  };
+
+  const handleOverlayChange = async (e) => {
+    setOverlayType(e.target.value);
+    if (file) {
+      await updateImage(file, e.target.value);
+    }
+  };
+
+  const reloadEmojis = async () => {
+    if (file) {
+      await updateImage(file, overlayType);
+    }
+  };
+
+  const updateImage = async (file, overlayType) => {
+    try {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64File = reader.result.split(",")[1];
+        const response = await axios.post("https://very-olva-facubritez-dda6723d.koyeb.app/api/procesar-imagen", {
+          file: base64File,
+          overlayType
+        });
+        setProcessedImage(response.data.processedImage);
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error("Error al procesar la imagen:", error);
+    }
+  };
 
   return (
-    <div className="slots">
-      <h2>Slots Aleatorios</h2>
-      <div className="container">
-        <div className="button-container">
-          <button onClick={loadRandom} id="loadRandom">
-            <i className="fas fa-sync-alt"></i>
-          </button>
-
-          <button onClick={downloadAndCopy} className="button">
-            💾imagen📋texto
-          </button>
-
-          <a id="downloadLink" className="button" download>
-            💾Imagen
-          </a>
-
-          <button onClick={copyText} className="button">
-            📋texto
-          </button>
-        </div>
-
-        <div className="slot">
-          <img id="randomImage" alt="Imagen aleatoria" />
-          <p id="randomText"></p>
+    <div
+      className={`app-container ${isDragging ? "drag-over" : ""}`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      <h2 className="header">Procesador de Imagen</h2>
+      <div className="controls-container">
+        <div className="input-group">
+          <label htmlFor="file-upload" className="file-upload-label">
+            Seleccionar archivo
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/*,application/pdf"
+            onChange={handleFileChange}
+            className="file-input"
+          />
         </div>
       </div>
+
+      {processedImage && (
+        <div className="canvas-container">
+          <div className="button-container">
+            <div className="input-group">
+              <div className="input-group">
+                <select value={overlayType} onChange={handleOverlayChange}>
+                  <option value="NaranjaX 1">NX 1 (MP)</option>
+                  <option value="NaranjaX 2">NX 2</option>
+                  <option value="Personal Pay">Personal Pay</option>
+                  <option value="Claro Pay">Claro Pay (en desarrollo)</option>
+                  <option value="Lemon">Lemon (en desarrollo)</option>
+                </select>
+              </div>
+            </div>
+            <a href={processedImage} download="imagen.png" className="button">
+              Descargar Imagen
+            </a>
+            <button onClick={reloadEmojis} className="button">
+              🔄️
+            </button>
+          </div>
+          <h3>Imagen Procesada</h3>
+          <img src={processedImage} alt="Procesada" />
+        </div>
+      )}
     </div>
   );
 }
 
-export default Slots;
+export default Comprobantes;

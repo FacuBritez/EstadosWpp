@@ -4,13 +4,14 @@ import Slots from "./components/Slots";
 import Comprobantes from "./components/Comprobantes";
 
 function App() {
+  // Estado para controlar qué componente mostrar
   const [mostrarSlots, setMostrarSlots] = useState(true);
 
+  // Función para alternar entre los componentes
   const toggleComponente = () => {
     setMostrarSlots(!mostrarSlots);
   };
 
-  /* Componentes separados
   return (
     <div className="App">
       <div className="toggle-button-container">
@@ -18,22 +19,10 @@ function App() {
           {mostrarSlots ? "Mostrar Comprobantes" : "Mostrar Slots"}
         </button>
       </div>
+      {/* Renderiza el componente basado en el estado */}
       {mostrarSlots ? <Slots /> : <Comprobantes />}
     </div>
   );
-  */
-
-  return (
-    <div className="App">
-      <div className="toggle-button-container">
-        <button onClick={toggleComponente} className="toggle-button">
-          {mostrarSlots ? "Mostrar Comprobantes" : "Mostrar Slots"}
-        </button>
-      </div>
-      {mostrarSlots ? <Slots /> : <Comprobantes />}
-    </div>
-  );
-  
 }
 
 export default App;
