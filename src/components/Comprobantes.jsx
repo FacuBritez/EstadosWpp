@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Comprobantes.css";
+import * as pdfjsLib from "pdfjs-dist/build/pdf";
+import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 function Comprobantes() {
   const [overlayType, setOverlayType] = useState("NaranjaX 1");
@@ -51,16 +55,34 @@ function Comprobantes() {
 
   const updateImage = async (file, overlayType) => {
     try {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64File = reader.result.split(",")[1];
+      if (file.type === "application/pdf") {
+        const pdf = await pdfjsLib.getDocument(URL.createObjectURL(file)).promise;
+        const page = await pdf.getPage(1);
+        const viewport = page.getViewport({ scale: 1 });
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        await page.render({ canvasContext: context, viewport }).promise;
+        const base64File = canvas.toDataURL("image/png").split(",")[1];
         const response = await axios.post("https://very-olva-facubritez-dda6723d.koyeb.app/api/procesar-imagen", {
           file: base64File,
           overlayType
         });
         setProcessedImage(response.data.processedImage);
-      };
-      reader.readAsDataURL(file);
+      } else {
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          const base64File = reader.result.split(",")[1];
+          const response = await axios.post("https://very-olva-facubritez-dda6723d.koyeb.app/api/procesar-imagen", {
+            file: base64File,
+            overlayType
+          });
+          setProcessedImage(response.data.processedImage);
+        };
+        reader.readAsDataURL(file);
+      }
     } catch (error) {
       console.error("Error al procesar la imagen:", error);
     }
