@@ -54,19 +54,19 @@ function Comprobantes() {
 
   const updateImage = async (file, overlayType) => {
     try {
-      console.log("Archivo recibido:", file);
+      console.log("Archivo recibido");
   
       let base64File;
       if (file.type === "application/pdf") {
-        console.log("Archivo es PDF, procesando PDF...");
+        console.log("Tipo de archivo: PDF \nprocesando PDF...");
         base64File = await processPdf(file); // Procesa el PDF y devuelve la imagen base64
         console.log("PDF procesado a base64");
       } else {
-        console.log("Archivo es imagen, procesando imagen...");
+        console.log("Tipo de archivo: Imagen \nprocesando imagen...");
         const reader = new FileReader();
         reader.onloadend = async () => {
           base64File = reader.result.split(",")[1];
-          console.log("Imagen convertida a base64:", base64File);
+          console.log("Imagen convertida a base64");
           console.log("Enviando imagen al backend...");
           await sendToBackend(base64File, overlayType);
         };
