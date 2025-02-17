@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Comprobantes.css";
 import * as pdfjsLib from "pdfjs-dist/build/pdf";
-import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
+import pdfjsWorker from "pdfjs-dist/build/pdf.worker.js";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 function Comprobantes() {
   const [overlayType, setOverlayType] = useState("NaranjaX 1");
