@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Comprobantes.css";
-import * as pdfjsLib from "pdfjs-dist/build/pdf";
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.js",
-  import.meta.url
-).toString();
 
 function Comprobantes() {
   const [overlayType, setOverlayType] = useState("NaranjaX 1");
@@ -27,7 +22,10 @@ function Comprobantes() {
     e.preventDefault();
     setIsDragging(false);
     const newFile = e.dataTransfer.files[0];
-    if (newFile && (newFile.type.startsWith("image/") || newFile.type === "application/pdf")) {
+    if (
+      newFile &&
+      (newFile.type.startsWith("image/") || newFile.type === "application/pdf")
+    ) {
       setFile(newFile);
       await updateImage(newFile, overlayType);
     }
@@ -56,38 +54,80 @@ function Comprobantes() {
 
   const updateImage = async (file, overlayType) => {
     try {
+      console.log("Archivo recibido:", file);
+  
+      let base64File;
       if (file.type === "application/pdf") {
-        const pdf = await pdfjsLib.getDocument(URL.createObjectURL(file)).promise;
-        const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 1 });
-        const canvas = document.createElement("canvas");
-        const context = canvas.getContext("2d");
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-
-        await page.render({ canvasContext: context, viewport }).promise;
-        const base64File = canvas.toDataURL("image/png").split(",")[1];
-        const response = await axios.post("https://very-olva-facubritez-dda6723d.koyeb.app/api/procesar-imagen", {
-          file: base64File,
-          overlayType
-        });
-        setProcessedImage(response.data.processedImage);
+        console.log("Archivo es PDF, procesando PDF...");
+        base64File = await processPdf(file); // Procesa el PDF y devuelve la imagen base64
+        console.log("PDF procesado a base64");
       } else {
+        console.log("Archivo es imagen, procesando imagen...");
         const reader = new FileReader();
         reader.onloadend = async () => {
-          const base64File = reader.result.split(",")[1];
-          const response = await axios.post("https://very-olva-facubritez-dda6723d.koyeb.app/api/procesar-imagen", {
-            file: base64File,
-            overlayType
-          });
-          setProcessedImage(response.data.processedImage);
+          base64File = reader.result.split(",")[1];
+          console.log("Imagen convertida a base64:", base64File);
+          console.log("Enviando imagen al backend...");
+          await sendToBackend(base64File, overlayType);
         };
         reader.readAsDataURL(file);
+        return; // Salimos porque el envío se hará en el onloadend
       }
+  
+      // Si es PDF o ya tenemos el base64, enviamos al backend
+      console.log("Enviando PDF convertido al backend...");
+      await sendToBackend(base64File, overlayType);
     } catch (error) {
       console.error("Error al procesar la imagen:", error);
     }
   };
+  
+  const processPdf = async (file) => {
+    console.log("Importando pdfjs...");
+    const pdfjsLib = await import("pdfjs-dist/build/pdf");
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `${
+      import.meta.env.BASE_URL
+    }pdf.worker.js`;
+  
+    console.log("Cargando documento PDF...");
+    const loadingTask = pdfjsLib.getDocument(URL.createObjectURL(file));
+    const pdf = await loadingTask.promise;
+  
+    console.log("PDF cargado. Obteniendo página 1...");
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({ scale: 1 });
+  
+    const canvas = document.createElement("canvas");
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext("2d");
+  
+    console.log("Renderizando página 1...");
+    await page.render({ canvasContext: ctx, viewport }).promise;
+  
+    console.log("Página renderizada.");
+    const dataUrl = canvas.toDataURL("image/png");
+    console.log("Canvas convertido a DataURL.");
+    return dataUrl.split(",")[1]; // Solo devolvemos el contenido base64
+  };
+  
+  const sendToBackend = async (base64File, overlayType) => {
+    try {
+      const response = await axios.post(
+        "https://very-olva-facubritez-dda6723d.koyeb.app/api/procesar-imagen",
+        {
+          file: base64File,
+          overlayType,
+        }
+      );
+      console.log("Respuesta del backend:", response.data);
+      setProcessedImage(response.data.processedImage); // Actualizamos la imagen procesada
+    } catch (error) {
+      console.error("Error al enviar la imagen al backend:", error);
+    }
+  };
+  
+  
 
   return (
     <div
