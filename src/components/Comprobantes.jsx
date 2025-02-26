@@ -161,8 +161,8 @@ function Comprobantes() {
                   <option value="NaranjaX 1">NX 1 (MP)</option>
                   <option value="NaranjaX 2">NX 2</option>
                   <option value="Personal Pay">Personal Pay</option>
-                  <option value="Claro Pay">Claro Pay (en desarrollo)</option>
-                  <option value="Lemon">Lemon (en desarrollo)</option>
+                  {/* <option value="Claro Pay">Claro Pay</option> */}
+                  <option value="Lemon">Lemon</option>
                 </select>
               </div>
             </div>
