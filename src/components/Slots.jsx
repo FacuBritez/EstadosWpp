@@ -91,10 +91,7 @@ function Slots() {
   const initializedRef = useRef(false);
 
   useEffect(() => {
-    if (!initializedRef.current) {
-      initialize();
-      initializedRef.current = true;
-    }
+    initialize();
   }, []);
 
   return (
