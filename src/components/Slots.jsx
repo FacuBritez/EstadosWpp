@@ -24,8 +24,8 @@ async function fetchJuegos() {
 async function initialize() {
   if (!juegosCache) {
     juegosCache = await fetchJuegos();
-    loadRandom(); // Carga el primer juego después de obtener los datos
   }
+  loadRandom(); // Carga el primer Slot al iniciar
 }
 
 let fadeOut = () => {
