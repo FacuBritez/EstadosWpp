@@ -3,7 +3,6 @@ import axios from "axios";
 import "./Comprobantes.css";
 import dragImg from "../assets/DragAndDrop/DragAndDrop.png";
 
-
 function Comprobantes() {
   const [overlayType, setOverlayType] = useState("Personal Pay");
   const [processedImage, setProcessedImage] = useState(dragImg);
@@ -57,7 +56,7 @@ function Comprobantes() {
   const updateImage = async (file, overlayType) => {
     try {
       console.log("Archivo recibido");
-  
+
       let base64File;
       if (file.type === "application/pdf") {
         console.log("Tipo de archivo: PDF \nprocesando PDF...");
@@ -75,7 +74,7 @@ function Comprobantes() {
         reader.readAsDataURL(file);
         return; // Salimos porque el envío se hará en el onloadend
       }
-  
+
       // Si es PDF o ya tenemos el base64, enviamos al backend
       console.log("Enviando PDF convertido al backend...");
       await sendToBackend(base64File, overlayType);
@@ -83,36 +82,36 @@ function Comprobantes() {
       console.error("Error al procesar la imagen:", error);
     }
   };
-  
+
   const processPdf = async (file) => {
     console.log("Importando pdfjs...");
     const pdfjsLib = await import("pdfjs-dist/build/pdf");
     pdfjsLib.GlobalWorkerOptions.workerSrc = `${
       import.meta.env.BASE_URL
     }pdf.worker.js`;
-  
+
     console.log("Cargando documento PDF...");
     const loadingTask = pdfjsLib.getDocument(URL.createObjectURL(file));
     const pdf = await loadingTask.promise;
-  
+
     console.log("PDF cargado. Obteniendo página 1...");
     const page = await pdf.getPage(1);
     const viewport = page.getViewport({ scale: 1 });
-  
+
     const canvas = document.createElement("canvas");
     canvas.width = viewport.width;
     canvas.height = viewport.height;
     const ctx = canvas.getContext("2d");
-  
+
     console.log("Renderizando página 1...");
     await page.render({ canvasContext: ctx, viewport }).promise;
-  
+
     console.log("Página renderizada.");
     const dataUrl = canvas.toDataURL("image/png");
     console.log("Canvas convertido a DataURL.");
     return dataUrl.split(",")[1]; // Solo devolvemos el contenido base64
   };
-  
+
   const sendToBackend = async (base64File, overlayType) => {
     try {
       const response = await axios.post(
@@ -128,8 +127,6 @@ function Comprobantes() {
       console.error("Error al enviar la imagen al backend:", error);
     }
   };
-  
-  
 
   return (
     <div
@@ -154,31 +151,29 @@ function Comprobantes() {
         </div>
       </div>
 
-      {processedImage && (
-        <div className="canvas-container">
-          <div className="button-container">
+      <div className="canvas-container">
+        <div className="button-container">
+          <div className="input-group">
             <div className="input-group">
-              <div className="input-group">
-                <select value={overlayType} onChange={handleOverlayChange}>
-                  <option value="Personal Pay">Personal Pay</option>
-                  <option value="MiSaldo">MiSaldo</option>
-                  <option value="NaranjaX 1">NX 1 (MP)</option>
-                  <option value="NaranjaX 2">NX 2</option>
-                  <option value="Lemon">Lemon</option>
-                </select>
-              </div>
+              <select value={overlayType} onChange={handleOverlayChange}>
+                <option value="Personal Pay">Personal Pay</option>
+                <option value="MiSaldo">MiSaldo</option>
+                <option value="NaranjaX 1">NX 1 (MP)</option>
+                <option value="NaranjaX 2">NX 2</option>
+                <option value="Lemon">Lemon</option>
+              </select>
             </div>
-            <a href={processedImage} download="imagen.png" className="button">
-              Descargar Imagen
-            </a>
-            <button onClick={reloadEmojis} className="button">
-              🔄️
-            </button>
           </div>
-          <h3>Imagen Procesada</h3>
-          <img src={processedImage} alt="Procesada" />
+          <a href={processedImage} download="imagen.png" className="button">
+            Descargar Imagen
+          </a>
+          <button onClick={reloadEmojis} className="button">
+            🔄️
+          </button>
         </div>
-      )}
+        <h3>Imagen Procesada</h3>
+        <img src={processedImage} alt="Procesada" />
+      </div>
     </div>
   );
 }
