@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Comprobantes.css";
+import dragImg from "../assets/DragAndDrop/DragAndDrop.png";
+
 
 function Comprobantes() {
-  const [overlayType, setOverlayType] = useState("NaranjaX 1");
-  const [processedImage, setProcessedImage] = useState(null);
+  const [overlayType, setOverlayType] = useState("Personal Pay");
+  const [processedImage, setProcessedImage] = useState(dragImg);
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -158,10 +160,10 @@ function Comprobantes() {
             <div className="input-group">
               <div className="input-group">
                 <select value={overlayType} onChange={handleOverlayChange}>
-                  <option value="NaranjaX 1">NX 1 (MP)</option>
-                  <option value="NaranjaX 2">NX 2</option>
                   <option value="Personal Pay">Personal Pay</option>
                   <option value="MiSaldo">MiSaldo</option>
+                  <option value="NaranjaX 1">NX 1 (MP)</option>
+                  <option value="NaranjaX 2">NX 2</option>
                   <option value="Lemon">Lemon</option>
                 </select>
               </div>
